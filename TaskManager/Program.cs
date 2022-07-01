@@ -9,6 +9,8 @@ namespace TaskManager
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("Enter the command:");
+
             var taskManager = new TaskManager();
 
             Task task1 = new Task(1, "task1");
@@ -72,9 +74,8 @@ namespace TaskManager
 
             taskManager.ShowTasksNeedToCompleteToday();
 
-            ImportExport ImportExport = new ImportExport();
-            ImportExport.Import(groupOfTasks1);
-            ImportExport.Export();
+            ImportExport.ImportGroups(groupOfTasks1, groupOfTasks2);
+            ImportExport.ExportGroups();
         }
     }
 }

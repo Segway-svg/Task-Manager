@@ -2,37 +2,55 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace TaskManager.SeDeserialization
 {
-    internal class ImportExport
+    public static class ImportExport
     {
-        public static void Import(GroupOfTasks groupOfTasks)
+        public static void ImportGroups(params GroupOfTasks[] groupOfTasks)
         {
-            // Сохранение в файл задачи (включая группы и подзадачи)
-            using (FileStream fileStream = new FileStream("import.dat", FileMode.OpenOrCreate))
+            // Сохранение в файл группы (включая задачи и подзадачи)
+
+            using (FileStream fileStream = new FileStream("importGroups.dat", FileMode.OpenOrCreate))
             {
                 BinarySerializer serializer = new BinarySerializer();
                 var input = serializer.Serialize(groupOfTasks);
-                //byte[] input = Encoding.Default.GetBytes(text);
-
-                fileStream.Write(input, 0, input.Length);
+                fileStream.Write(input);
                 Console.WriteLine("Import completed");
             }
         }
 
-        public static void Export()
+        public static void ImportTasks(params Task[] tasks)
         {
+            using (FileStream fileStream = new FileStream("importTasks.dat", FileMode.OpenOrCreate))
+            {
+                BinarySerializer serializer = new BinarySerializer();
+                var input = serializer.Serialize(tasks);
+                fileStream.Write(input);
+                Console.WriteLine("Import completed");
+            }
+        }
+
+        public static void ExportGroups()
+        {
+            // Экспорт групп из файла
 
             BinarySerializer serializer = new BinarySerializer();
-            var export = File.ReadAllBytes("import.dat");
+            var export = File.ReadAllBytes("importGroups.dat");
+            
+            var exportData = serializer.Deserialize<GroupOfTasks[]>(export);
+            Console.WriteLine("Export completed");
+        }
 
-            var exportData = serializer.Deserialize<GroupOfTasks>(export);
+        public static void ExportTasks()
+        {
+            // Экспорт задач из файла
+            BinarySerializer serializer = new BinarySerializer();
+            var export = File.ReadAllBytes("importTasks.dat");
 
-            // Создаём новый репозиторий для хранения окончательных данных
-            //var destinationRepository = new VolatileRepository();
-            //satellitesMemo2.UnpackInto(destinationRepository);
+            var exportData = serializer.Deserialize<GroupOfTasks[]>(export);
             Console.WriteLine("Export completed");
         }
     }

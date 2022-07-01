@@ -120,6 +120,7 @@ namespace TaskManager
                     task.ShowTask();
                 }
             }
+            Console.WriteLine();
         }
     }
 }
