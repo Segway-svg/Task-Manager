@@ -12,29 +12,19 @@ namespace TaskManager
     {
         public int Id { get; private set; }
         public string Name { get; private set; }
-        public List<Task> tasks = new List<Task>();
+        private List<Task> tasks = new List<Task>();
 
-        // Создание группы для задач
         public GroupOfTasks(int id, string name)
         {
             Id = id;
             Name = name;
         }
 
-        // Добавление задачи в группу
         public void AddTask(Task task)
         {
             tasks.Add(task);
         }
 
-        // Удаление задачи
-        public void DeleteTask(int id)
-        {
-            tasks.Remove(tasks[id]);
-        }
-
-
-        // Удаление задачи из группы
         public void DeleteTaskFromGroup(int id)
         {
             for (int i = 0; i < tasks.Count; i++)
@@ -46,14 +36,12 @@ namespace TaskManager
             }
         }
 
-        // Получение списка групп с добавленными задачами
-        public IReadOnlyList<Task> GetGroup()
+        public IReadOnlyList<Task> GetTasks()
         {
             return tasks;
         }
 
 
-        // Просмотр всех задач и подзадач группы
         public void ShowGroup()
         {
             Console.WriteLine($"Group {Name}:");

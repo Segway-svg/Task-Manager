@@ -74,8 +74,11 @@ namespace TaskManager
 
             taskManager.ShowTasksNeedToCompleteToday();
 
-            ImportExport.ImportGroups(groupOfTasks1, groupOfTasks2);
-            ImportExport.ExportGroups();
+            ImportExport.ExportGroups(groupOfTasks1, groupOfTasks2);
+            var deserializedData = ImportExport.ImportGroups();
+            
+
+            TasksPrinter.Print(taskManager.Tasks, Console.Out);
         }
     }
 }

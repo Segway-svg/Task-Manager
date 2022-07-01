@@ -13,13 +13,11 @@ namespace TaskManager
         public int Id { get; private set; }
 
         public string Info { get; private set; }
-        // Возможность отметить задачу как выполненную
+        
         public bool IsDone { get; set; }
-        // Возможность указать дату выполнения задачи (дедлайн)
         public DateTime Deadline { get; set; }
         public List<Subtask> SubTasks { get; private set; } = new List<Subtask>();
 
-        // Создание новой задачи
         public Task(int id, string info)
         {
             Id = id;
@@ -31,7 +29,6 @@ namespace TaskManager
             SubTasks.Add(new Subtask(id, info));
         }
 
-        // Просмотр созданной задачи
         public void ShowTask()
         {
             string deadlineStr = "";
@@ -42,11 +39,11 @@ namespace TaskManager
             }
             if (IsDone)
             {
-                Console.WriteLine($"[x]{deadlineStr}" + " {" + Id + "} " + Info);
+                Console.WriteLine($"[x]{deadlineStr} {{{Id}}} {Info}");
             }
             else
             {
-                Console.WriteLine($"[]{deadlineStr}" + " {" + Id + "} " + Info);
+                Console.WriteLine($"[ ]{deadlineStr} {{{Id}}} {Info}");
             }
 
             foreach (var subtask in SubTasks)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,8 +12,9 @@ namespace TaskManager
     {
         private List<Task> tasks = new List<Task>();
 
-        // Свойство group в Task?
         private List<GroupOfTasks> groups = new List<GroupOfTasks>();
+
+        public IReadOnlyList<Task> Tasks => tasks;
 
         public void AddTask(Task task)
         {
@@ -28,27 +30,25 @@ namespace TaskManager
 
         public void AddGroup(GroupOfTasks group)
         {
-            foreach (var task in group.tasks)
+            foreach (var task in group.GetTasks())
             {
                 AddTask(task);
             }
             groups.Add(group);
         }
 
-        // Удаление группы задач
-        public void DeleteGroup(int id)
+        public void DeleteGroup(GroupOfTasks group)
         {
-            groups.Remove(groups[id]);
+            groups.Remove(group);
         }
 
-        // Показать все группы с их задачами и подзадачами
         public void ShowAllGroupsAndItsInfo()
         {
             Console.WriteLine("All groups and their info:");
             foreach (var group in groups)
             {
                 Console.WriteLine(group.Name);
-                foreach (var task in group.tasks)
+                foreach (var task in group.GetTasks())
                 {
                     task.ShowTask();
                 }
@@ -66,7 +66,6 @@ namespace TaskManager
             Console.WriteLine();
         }
 
-        // Получение всех выполненных задач
         public void GetAllCompletedTasks()
         {
             Console.WriteLine("Completed tasks:");
@@ -109,7 +108,6 @@ namespace TaskManager
             }
         }
 
-        // Возможность получить задачи, которые нужно сделать сегодня
         public void ShowTasksNeedToCompleteToday()
         {
             Console.WriteLine("Tasks need to complete today");
