@@ -28,35 +28,5 @@ namespace TaskManager
         {
             SubTasks.Add(new Subtask(id, info));
         }
-
-        public void ShowTask()
-        {
-            string deadlineStr = "";
-
-            if (Deadline != DateTime.MinValue)
-            {
-                deadlineStr = " (" + Deadline + ")";
-            }
-            if (IsDone)
-            {
-                Console.WriteLine($"[x]{deadlineStr} {{{Id}}} {Info}");
-            }
-            else
-            {
-                Console.WriteLine($"[ ]{deadlineStr} {{{Id}}} {Info}");
-            }
-
-            foreach (var subtask in SubTasks)
-            {
-                if (subtask.IsDone)
-                {
-                    Console.WriteLine($"- [x]" + " {" + subtask.Id + "} " + subtask.Info);
-                }
-                else
-                {
-                    Console.WriteLine($"- [ ]" + " {" + subtask.Id + "} " + subtask.Info);
-                }
-            }
-        }
     }
 }

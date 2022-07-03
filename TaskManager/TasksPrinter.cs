@@ -9,7 +9,7 @@ namespace TaskManager
 {
     public static class TasksPrinter
     {
-        public static void PrintTask(IReadOnlyCollection<Task> tasks, TextWriter writer)
+        public static void PrintTasks(IEnumerable<Task> tasks, TextWriter writer)
         {
             foreach (var task in tasks)
             {
@@ -17,20 +17,30 @@ namespace TaskManager
             }
         }
 
-        public static void PrintGroup(IReadOnlyCollection<GroupOfTasks> groupOfTasks, TextWriter writer)
+        public static void PrintAllSubtasks(List<Subtask> subtasks, TextWriter writer)
+        {
+            foreach (var subtask in subtasks)
+            {
+                if (subtask.IsDone)
+                {
+                    writer.WriteLine($"- [x] {{{subtask.Id}}} {subtask.Info}");
+                }
+                else
+                {
+                    writer.WriteLine($"- [ ] {{{subtask.Id}}} {subtask.Info}");
+                }
+            }
+        }
+
+        public static void PrintGroups(IEnumerable<GroupOfTasks> groupOfTasks, TextWriter writer)
         {
             foreach (var group in groupOfTasks)
             {
-                Console.WriteLine($"Group {group.Name}:");
-                foreach (var task in group.GetTasks())
-                { 
-                    PrintTask(task, writer);
-                }
+                PrintGroup(group, writer);
             }
-            Console.WriteLine();
         }
 
-        private static void PrintTask(Task task, TextWriter writer)
+        public static void PrintTask(Task task, TextWriter writer)
         {
             string deadlineStr = "";
 
@@ -60,9 +70,18 @@ namespace TaskManager
             }
         }
 
-        public static void Print(IReadOnlyCollection<GroupOfTasks> groupsOfTasks)
+        public static void PrintSubtask(List<Subtask> subtasks, TextWriter writer)
         {
+            PrintAllSubtasks(subtasks, Console.Out);
+        }
 
+        public static void PrintGroup(GroupOfTasks groupOfTasks, TextWriter writer)
+        {
+            Console.WriteLine($"Group {groupOfTasks.Name}:");
+            foreach (var task in groupOfTasks.GetTasks())
+            {
+                PrintTask(task, writer);
+            }
         }
     }
 }

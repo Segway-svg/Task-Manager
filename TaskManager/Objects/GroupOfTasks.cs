@@ -40,16 +40,5 @@ namespace TaskManager
         {
             return tasks;
         }
-
-
-        public void ShowGroup()
-        {
-            Console.WriteLine($"Group {Name}:");
-            foreach (var task in tasks)
-            {
-                task.ShowTask();
-            }
-            Console.WriteLine();
-        }
     }
 }
