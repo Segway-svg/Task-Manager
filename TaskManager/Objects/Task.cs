@@ -23,10 +23,5 @@ namespace TaskManager
             Id = id;
             Info = info;
         }
-
-        public void CreateSubtask(int id, string info)
-        {
-            SubTasks.Add(new Subtask(id, info));
-        }
     }
 }

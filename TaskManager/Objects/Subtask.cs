@@ -19,17 +19,5 @@ namespace TaskManager
             Id = id;
             Info = info;
         }
-
-        public void ShowSubtask()
-        {
-            if (IsDone)
-            {
-                Console.WriteLine($"- [ ] {Id} {Info}");
-            }
-            else
-            {
-                Console.WriteLine($"- [x] {Id} {Info}");
-            }
-        }
     }
 }

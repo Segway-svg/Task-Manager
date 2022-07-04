@@ -17,19 +17,9 @@ namespace TaskManager
             }
         }
 
-        public static void PrintAllSubtasks(List<Subtask> subtasks, TextWriter writer)
+        public static void PrintAllSubtasks(IEnumerable<Subtask> subtasks, TextWriter writer)
         {
-            foreach (var subtask in subtasks)
-            {
-                if (subtask.IsDone)
-                {
-                    writer.WriteLine($"- [x] {{{subtask.Id}}} {subtask.Info}");
-                }
-                else
-                {
-                    writer.WriteLine($"- [ ] {{{subtask.Id}}} {subtask.Info}");
-                }
-            }
+            PrintSubtasks(subtasks, Console.Out);
         }
 
         public static void PrintGroups(IEnumerable<GroupOfTasks> groupOfTasks, TextWriter writer)
@@ -70,9 +60,19 @@ namespace TaskManager
             }
         }
 
-        public static void PrintSubtask(List<Subtask> subtasks, TextWriter writer)
+        public static void PrintSubtasks(IEnumerable<Subtask> subtasks, TextWriter writer)
         {
-            PrintAllSubtasks(subtasks, Console.Out);
+            foreach (var subtask in subtasks)
+            {
+                if (subtask.IsDone)
+                {
+                    writer.WriteLine($"- [x] {{{subtask.Id}}} {subtask.Info}");
+                }
+                else
+                {
+                    writer.WriteLine($"- [ ] {{{subtask.Id}}} {subtask.Info}");
+                }
+            }
         }
 
         public static void PrintGroup(GroupOfTasks groupOfTasks, TextWriter writer)

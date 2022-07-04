@@ -52,7 +52,7 @@ namespace TaskManager
                 {
                     Console.WriteLine("\nEnter the subtask id and info:");
                     Console.Write("id: ");
-                    int subId = Convert.ToInt32(Console.ReadLine());
+                    int subId = ConsoleInputOutput.GetId();
                     Console.Write("info: ");
                     string info = Console.ReadLine();
                     task.SubTasks.Add(new Subtask(subId, info));
@@ -183,7 +183,7 @@ namespace TaskManager
             {
                 if (task.Id == id)
                 {
-                    TasksPrinter.PrintSubtask(task.SubTasks, Console.Out);
+                    TasksPrinter.PrintSubtasks(task.SubTasks, Console.Out);
                 }
             }
         }
@@ -221,38 +221,18 @@ namespace TaskManager
             }
             if (type == "task")
             {
-                foreach (var task in tasks)
+                foreach (var task in tasks.Where(task => task.Id == id))
                 {
-                    if (task.Id == id)
-                    {
-                        if (!task.IsDone)
-                        {
-                            task.IsDone = true;
-                        }
-                        else
-                        {
-                            task.IsDone = false;
-                        }
-                    }
+                    task.IsDone = !task.IsDone;
                 }
             }
             else if (type == "subtask")
             {
                 foreach (var task in tasks)
                 {
-                    foreach (var subtask in task.SubTasks)
+                    foreach (var subtask in task.SubTasks.Where(subtask => subtask.Id == id))
                     {
-                        if (subtask.Id == id)
-                        {
-                            if (!subtask.IsDone)
-                            {
-                                subtask.IsDone = true;
-                            }
-                            else
-                            {
-                                subtask.IsDone = false;
-                            }
-                        }
+                        subtask.IsDone = !subtask.IsDone;
                     }
                 }
             }
@@ -264,15 +244,15 @@ namespace TaskManager
             {
                 if (task.Id == id)
                 {
-                    DateTime dob; // date of birth
+                    DateTime birthDate;
                     string input;
                     do
                     {
                         Console.WriteLine("Enter the date дд.ММ.гггг (day.month.year):");
                         input = Console.ReadLine();
                     }
-                    while (!DateTime.TryParseExact(input, "dd.MM.yyyy", null, DateTimeStyles.None, out dob));
-                    task.Deadline = dob;
+                    while (!DateTime.TryParseExact(input, "dd.MM.yyyy", null, DateTimeStyles.None, out birthDate));
+                    task.Deadline = birthDate;
                 }
             }
         }

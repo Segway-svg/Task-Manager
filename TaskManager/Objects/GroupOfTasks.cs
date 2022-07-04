@@ -20,22 +20,6 @@ namespace TaskManager
             Name = name;
         }
 
-        public void AddTask(Task task)
-        {
-            tasks.Add(task);
-        }
-
-        public void DeleteTaskFromGroup(int id)
-        {
-            for (int i = 0; i < tasks.Count; i++)
-            {
-                if (tasks[i].Id == id)
-                {
-                    tasks.Remove(tasks[i]);
-                }
-            }
-        }
-
         public IReadOnlyList<Task> GetTasks()
         {
             return tasks;
